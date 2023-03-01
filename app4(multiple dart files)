@@ -1,0 +1,104 @@
+main.dart
+
+import 'package:flutter/material.dart';
+
+import './quesion.dart'; 
+import './answer.dart';
+void main()
+{
+  runApp(MyApp());
+}
+class MyApp extends StatefulWidget
+{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    //throw UnimplementedError();
+    return _MyAppState();
+  }
+}
+class _MyAppState extends State<MyApp>
+{
+  var _questionIndex=0;
+  void _answerQuestion(){
+    setState(() {
+      _questionIndex++;
+    });
+    
+    print('Answer chose!');
+  }
+  @override
+  Widget build(BuildContext context)
+  {
+    var questions = ['What is your favourite color?', 'What is your favourite animal?'];
+    return MaterialApp(home : Scaffold(
+      appBar: AppBar(title: Text('My First App'),),
+      body: Column( children: [
+          Question(questions[_questionIndex]), 
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
+          Answer(_answerQuestion),
+          // ElevatedButton(child: Text('Answer 1'), onPressed: _answerQuestion,),
+          // ElevatedButton(child: Text('Answer 2'),onPressed:  _answerQuestion,),
+          // ElevatedButton(child: Text('Answer 3'),onPressed:  _answerQuestion,),
+          // ElevatedButton(child: Text('Answer 4'),onPressed:  _answerQuestion,),
+        ],),
+      ),);
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+question.dart
+
+import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+
+class Question  extends StatelessWidget {
+//  const Question ({Key key}) : super(key: key);
+String questionText;
+Question(String Qtext)
+{
+  this.questionText=Qtext;
+}
+  @override
+  Widget build(BuildContext context) {
+ //   return const Placeholder();
+  return Container(
+    width: double.infinity,
+    margin: EdgeInsets.all(10),
+    child:Text(
+      questionText,
+      style: TextStyle(fontSize: 28, ),
+      textAlign: TextAlign.center,
+      )
+    );
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+answer.dart
+
+import 'package:flutter/material.dart';
+
+class Answer extends StatelessWidget {
+ // const Answer({Key key}) : super(key: key);
+ final Function select;
+  Answer(this.select);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child:ElevatedButton(
+        style: ElevatedButton.styleFrom(onPrimary: Colors.blue), 
+        child: Text('Answer 1', style: TextStyle(color: Colors.black)), 
+        onPressed: select,
+        ),
+    );
+  }
+}
